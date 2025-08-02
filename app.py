@@ -562,15 +562,22 @@ def forbidden(e):
 def internal_server_error(e):
     return render_template('500.html'), 500
 
-# Run the app
-if __name__ == '__main__':
+# Create required directories and initialize db
+def init_app():
     # Create additional required directories
     os.makedirs('static/selfies', exist_ok=True)
     os.makedirs('static/qrcodes', exist_ok=True)
+    os.makedirs('static/uploads', exist_ok=True)
+    os.makedirs('static/faces', exist_ok=True)
     
     # Check if database exists, if not initialize it
     if not os.path.exists(app.config['DATABASE']):
         from init_db import init_db
         init_db()
-        
+
+# Initialize the app when imported
+init_app()
+
+# Run the app
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
